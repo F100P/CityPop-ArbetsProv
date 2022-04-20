@@ -10,7 +10,7 @@ const MainMenu = () => {
         <TouchableOpacity
         onPress={() => {
             //Varför fungerar inte det här?
-            navigation.navigate('SearchByCity');
+            navigation.navigate('SearchByCityScreen');
         }}>
 
              <Text>SEARCH BY CITY</Text></TouchableOpacity>
@@ -22,6 +22,13 @@ const MainMenu = () => {
         }}
         > 
         <Text>SEARCH BY COUNTRY</Text></TouchableOpacity>
+        <TouchableOpacity
+        onPress={() => {
+            //Varför fungerar inte det här?
+            navigation.navigate('ViewPopultation');
+        }}
+        > 
+        <Text>view population</Text></TouchableOpacity>
     </View>
   );
 };
