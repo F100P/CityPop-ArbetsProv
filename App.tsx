@@ -3,17 +3,19 @@ import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SearchByCityScreen from './Screens/SearchByCity';
+import SearchByCityScreen from './screens/SearchByCity';
 import MainMenu from './Components/MainMenu';
-import SearchByCountry from './Screens/SearchByCountry';
+import SearchByCountry from './screens/SearchByCountry';
 import ViewPopultation from './screens/ViewPopultation';
-import CityFilter from './Screens/CityFilter';
+import CityFilter from './screens/CityFilter';
+import StartScreen from './screens/StartScreen';
 const RootStack = createNativeStackNavigator();
 
 //Work for tomorrow, keep watching video. nesled screens, Investigate API
 export type RootStackParams = {
   SearchByCityScreen;
   SearchByCountry;
+  StartScreen;
   CityFilter;
   ViewPopultation:{
     name: string;
@@ -25,6 +27,7 @@ export default function App() {
   return (
     <NavigationContainer>
      <RootStack.Navigator>
+       <RootStack.Screen name='StartScreen' component={StartScreen}/>
        <RootStack.Screen name='SearchByCityScreen' component={SearchByCityScreen}/>
        <RootStack.Screen name='SearchByCountry' component={SearchByCountry}/>
        <RootStack.Screen name='CityFilter' component={CityFilter}/>
