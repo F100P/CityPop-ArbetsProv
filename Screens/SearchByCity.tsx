@@ -8,43 +8,83 @@ import test from "../connections/test";
 import searchCity from "../connections/searchCity";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../App";
-const SearchByCityScreen = ({ navigation }) => {
-  type Props = NativeStackScreenProps<RootStackParams, `SearchByCityScreen`>;
 
-  const [isLoading, setLoading] = useState(false);
-  const [data, setData] = useState([]);
-  const [testa, setTesta] = useState([]);
+type Props = NativeStackScreenProps<RootStackParams, "SearchByCityScreen">;
+const SearchByCityScreen = ({ navigation, route }: Props) => {
+  const [quaryOk, setQuaryOk] = useState(false);
   const [searchQuary, setSearchQuery] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  const [Country, setCoutry] = useState([]);
-  const navigateToNext = (country, population) =>
+  const navigateToNext = (country:string, population:string) =>
     navigation.navigate(`ViewPopultation`, {
       name: country,
       population: population,
     });
-  const onChangeSearch = (query) => setSearchQuery(query); //uppdaterar variabeln som ska skickas till Searchcountry
+  const onChangeSearch = (query: React.SetStateAction<never[]>) => setSearchQuery(query); //uppdaterar variabeln som ska skickas till Searchcountry
 
-  const SearchPressed = () =>
-    searchCity(searchQuary).then((data) => {
-      
-      navigateToNext(data.geonames[0].name, data.geonames[0].population);
-    }, setLoading(true) ); //Ge felmeddelande om navigeringen inte är okej
+  const navigateToCountry = (data:object) => {
+    navigation.navigate(`CityFilter`, {
+      allData: data,
+    });
+  };
+
+  const SearchPressed = () => {
+    setLoading(true);
+    //if City Search
+    if (route.params.mode) {
+      searchCity(searchQuary).then((data) => {
+        if (data.geonames.totalResultsCount != 0 && searchQuary.length != 0 ) {
+          navigateToNext(data.geonames[0].name, data.geonames[0].population);
+        } else {
+          setQuaryOk(true);
+          setLoading(false);
+        }
+      });
+    } else {
+      searchCity(searchQuary).then((data) => {
+        if (data.geonames.totalResultsCount != 0 && searchQuary.length != 0) {
+          navigateToCountry(data);
+        } else {
+          setQuaryOk(true);
+          setLoading(false);
+        }
+      });
+    }
+    //if Country search
+  }; //Ge felmeddelande om navigeringen inte är okej
   return (
-    <View style={{ flex: 1, padding: 24 }}>
-      <Text>SEARCH BY CITY</Text>
-      <Searchbar
-        placeholder='Enter a city'
-        value={searchQuary}
-        onChangeText={onChangeSearch}
-      />
+    <View style={styles.container}>
+      {route.params.mode ? (
+        <Text>SEARCH BY CITY</Text>
+      ) : (
+        <Text>SEARCH BY COUNTRY</Text>
+      )}
 
-      <TouchableOpacity onPress={SearchPressed}>
-        <Entypo name='magnifying-glass' size={240} color='black' />
-      </TouchableOpacity>
-      {isLoading ? <Text>Din Sökning gav inget resultat försök igen</Text> : (null)}
+      {loading ? (
+        <Text>loading</Text>
+      ) : (
+        <>
+          <Searchbar
+            placeholder='Enter a city'
+            value={searchQuary}
+            onChangeText={onChangeSearch}
+          />
+          <TouchableOpacity onPress={SearchPressed}>
+            <Entypo name='magnifying-glass' size={240} color='black' />
+          </TouchableOpacity>
+        </>
+      )}
+
+      {quaryOk ? <Text>Din Sökning gav inget resultat försök igen</Text> : null}
     </View>
   );
 };
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 24,
+    backgroundColor: "#61dafb",
+  },
+});
 
 export default SearchByCityScreen;

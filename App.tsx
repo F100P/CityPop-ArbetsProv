@@ -13,14 +13,18 @@ const RootStack = createNativeStackNavigator();
 
 //Work for tomorrow, keep watching video. nesled screens, Investigate API
 export type RootStackParams = {
-  SearchByCityScreen;
-  SearchByCountry;
-  StartScreen;
-  CityFilter;
+  SearchByCityScreen:{
+    mode: boolean;
+  };
+  
+  StartScreen: any;
+  CityFilter:{
+    allData: object,
+  };
   ViewPopultation:{
     name: string;
     population: string; //tills vidare
-  }
+  };
 }
 
 export default function App() {
@@ -29,7 +33,7 @@ export default function App() {
      <RootStack.Navigator>
        <RootStack.Screen name='StartScreen' component={StartScreen}/>
        <RootStack.Screen name='SearchByCityScreen' component={SearchByCityScreen}/>
-       <RootStack.Screen name='SearchByCountry' component={SearchByCountry}/>
+       
        <RootStack.Screen name='CityFilter' component={CityFilter}/>
        <RootStack.Screen name='ViewPopultation' component={ViewPopultation}/>
       </RootStack.Navigator>

@@ -25,7 +25,7 @@ const SearchByCountry = ({navigation}) => {
     const [Country, setCoutry] = useState([]);
     const onChangeSearch = query => setSearchQuery(query); //uppdaterar variabeln som ska skickas till Searchcountry
     const SearchPressed = () =>  searchCity(searchQuary).then((data)=>{
-      console.log(data);
+      
      setPopulation(data.geonames[0].population);
       setCountry(data.geonames[0].name);
 
@@ -36,7 +36,7 @@ const SearchByCountry = ({navigation}) => {
 
        
       }, []);
-    
+     //***********************Behöver lösa vad som händer när quaryt inte är ok eller tomt, eller laddar för längre */
       return (
         <View style={{ flex: 1, padding: 24 }}>
           {isLoading ? <ActivityIndicator/> : (
