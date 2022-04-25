@@ -8,6 +8,7 @@ import test from "../connections/test";
 import searchCity from "../connections/searchCity";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../App";
+import ListAccordionGroup from "react-native-paper/lib/typescript/components/List/ListAccordionGroup";
 
 type Props = NativeStackScreenProps<RootStackParams, "SearchByCityScreen">;
 const SearchByCityScreen = ({ navigation, route }: Props) => {
@@ -55,36 +56,90 @@ const SearchByCityScreen = ({ navigation, route }: Props) => {
   return (
     <View style={styles.container}>
       {route.params.mode ? (
-        <Text>SEARCH BY CITY</Text>
+        <Text style={styles.text}>SEARCH BY{"\n"}CITY</Text>
+        
       ) : (
-        <Text>SEARCH BY COUNTRY</Text>
+        <Text style={styles.text}>SEARCH BY{"\n"}COUNTRY</Text>
       )}
 
       {loading ? (
-        <Text>loading</Text>
+        <Text style={styles.loading}>loading</Text>
       ) : (
         <>
-          <Searchbar
+          <Searchbar style={styles.searchbar}
             placeholder='Enter a city'
             value={searchQuary}
             onChangeText={onChangeSearch}
           />
-          <TouchableOpacity onPress={SearchPressed}>
-            <Entypo name='magnifying-glass' size={240} color='black' />
+          <TouchableOpacity  style={styles.searchButton} onPress={SearchPressed}>
+            <Entypo name='magnifying-glass' size={60} color='black' />
           </TouchableOpacity>
         </>
       )}
 
-      {quaryOk ? <Text>Din Sökning gav inget resultat försök igen</Text> : null}
+      {quaryOk ? <Text style={styles.loading}>Din Sökning gav inget resultat försök igen</Text> : null}
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: "#61dafb",
+      flex: 2,
+      justifyContent:"center",
+      backgroundColor: '#61dafb',
+      alignItems: "center",
+      //paddingBottom: 200,
+    },
+  button: {
+      flex:0.2,
+      width:250,
+      alignItems:"center",
+      backgroundColor: "#ffffff",
+      borderRadius:10,
+      justifyContent:"center",
+      
+      marginBottom:20,
+      
+      
   },
+  title: {
+      fontSize:70,
+      flex:1,
+      justifyContent:"center",
+      alignItems:"center",
+      
+
+  },
+  text:{
+      //marginTop:50,
+      flex:0.4,
+      fontSize: 40,
+      fontWeight: 'bold',
+      textAlign:"center",
+      color:"#ffffff",
+      
+      
+      
+  },
+  searchbar:{
+    flex:0.10,
+    paddingVertical:10,
+    marginHorizontal:10,
+    
+    //margin: 100,
+  },
+  searchButton:{
+    
+    marginTop:20,
+    backgroundColor:"#ffffff",
+    borderRadius:180,
+    padding:10,
+  },
+  loading:{
+    marginTop:20,
+    fontSize:40,
+    color:"#ffffff",
+
+  }
 });
 
 export default SearchByCityScreen;

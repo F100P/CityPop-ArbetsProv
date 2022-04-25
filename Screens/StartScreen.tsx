@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
 import { Button } from 'react-native-paper';
 
@@ -6,8 +6,8 @@ const StartScreen = ({navigation}) => {
     return (
         <View style={styles.container}>
             <Text style ={styles.title}>CityPop</Text>
-            <Button style={styles.button} color='#000000' mode='contained' onPress ={()=> navigation.navigate("SearchByCityScreen",{mode: true})} >SEARCH BY CITY</Button>
-            <Button style={styles.button} color='#000000' mode='contained'onPress ={()=> navigation.navigate("SearchByCityScreen",{mode: false})}>SEARCH BY COUNTRY</Button>
+            <TouchableOpacity style={styles.button} onPress ={()=> navigation.navigate("SearchByCityScreen",{mode: true})} ><Text style={styles.text}>SEARCH BY CITY</Text></TouchableOpacity >
+            <TouchableOpacity style={styles.button}  onPress ={()=> navigation.navigate("SearchByCityScreen",{mode: false})}><Text style={styles.text}>SEARCH BY COUNTRY</Text></TouchableOpacity >
         </View>
     );
 };
@@ -18,13 +18,17 @@ const styles = StyleSheet.create({
         
         backgroundColor: '#61dafb',
         alignItems: "center",
+        paddingBottom: 200,
       },
     button: {
-        flex:3,
+        flex:1,
         width:250,
+        alignItems:"center",
+        backgroundColor: "#ffffff",
+        borderRadius:10,
+        justifyContent:"center",
         
-        margin:10,
-        
+        marginBottom:20,
         
         
     },
@@ -34,7 +38,14 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         paddingTop: 200,
+        fontWeight: "bold"
 
+    },
+    text:{
+        
+        fontSize: 17,
+        fontWeight: 'bold',
+        
     }
 });
 

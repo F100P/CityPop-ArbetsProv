@@ -15,7 +15,7 @@ const CityButton = (cityData) => {
   const navigation = useNavigation();
     
   return (
-        <TouchableOpacity
+        <TouchableOpacity style={styles.button}
         onPress={() => {
             //Varför fungerar inte det här?
             navigation.navigate('ViewPopultation',{
@@ -24,10 +24,46 @@ const CityButton = (cityData) => {
             })
         }}>
 
-             <Text>{city}</Text></TouchableOpacity>
+             <Text style={styles.text}>{city}</Text></TouchableOpacity>
      
   
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+      flex: 1,
+      
+      backgroundColor: '#61dafb',
+      alignItems: "center",
+      paddingBottom: 200,
+    },
+  button: {
+      width:400,
+      margin:5,
+      borderRadius:10,
+      padding:20,
+      alignItems:"center",
+      backgroundColor: "#ffffff",
+      
+      
+      
+  },
+  title: {
+      fontSize:70,
+      flex:3,
+      justifyContent:"center",
+      alignItems:"center",
+      paddingTop: 200,
+      fontWeight: "bold"
+
+  },
+  text:{
+      
+      fontSize: 17,
+      fontWeight: 'bold',
+      
+  }
+});
 
 export default CityButton;
