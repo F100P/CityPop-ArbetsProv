@@ -1,6 +1,6 @@
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import React from 'react';
-import { Button } from 'react-native-paper';
+
 
 const StartScreen = ({navigation}) => {
     return (
@@ -24,7 +24,8 @@ const styles = StyleSheet.create({
         flex:1,
         width:250,
         alignItems:"center",
-        backgroundColor: "#ffffff",
+        borderColor:"#ffffff",
+        borderWidth:10,
         borderRadius:10,
         justifyContent:"center",
         
@@ -38,13 +39,15 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignItems:"center",
         paddingTop: 200,
-        fontWeight: "bold"
+        fontWeight: "bold",
+        color: "#ffffff",
 
     },
     text:{
         
         fontSize: 17,
         fontWeight: 'bold',
+        color:"#ffffff"
         
     }
 });

@@ -3,8 +3,11 @@ import React from 'react';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from '../App';
 
+ 
+
 type Props = NativeStackScreenProps<RootStackParams, 'ViewPopultation'>
 const ViewPopultation = ({route}:Props) => {
+
     return (
         <View style={styles.container}>
             <Text style={styles.city}>{route.params.name}</Text>
@@ -28,8 +31,10 @@ const styles = StyleSheet.create({
       },
     city:{
         fontSize:30,
-        flex:0.3,
+        flex:0.6,
         fontWeight:"bold",
+        color:"#ffffff",
+        textAlignVertical:"center",
 
     }  ,
     display:{
@@ -39,19 +44,23 @@ const styles = StyleSheet.create({
         alignContent:"center",
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor:"#ffffff",
+        borderColor:"#ffffff",
+        borderWidth:10,
         borderRadius:10,
         
     },
     population:{
         fontFamily:"monospace",
-        fontSize:30,
+        fontSize:35,
         textAlign:"center",
+        fontWeight:"bold",
+        color:"#ffffff",
         
     },
     text:{
-        marginTop:-50,
-       
+        marginTop:-30,
+        fontWeight:"bold",
+        color:"#ffffff",
         fontSize:20,
     }
    

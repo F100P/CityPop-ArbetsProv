@@ -1,53 +1,64 @@
-import { NavigationContainer } from '@react-navigation/native';
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import SearchByCityScreen from './screens/SearchByCity';
-import MainMenu from './Components/MainMenu';
-import SearchByCountry from './screens/SearchByCountry';
-import ViewPopultation from './screens/ViewPopultation';
-import CityFilter from './screens/CityFilter';
-import StartScreen from './screens/StartScreen';
+import { NavigationContainer} from "@react-navigation/native";
+
+import React from "react";
+
+import {
+  createNativeStackNavigator,
+
+} from "@react-navigation/native-stack";
+import SearchByCityScreen from "./screens/SearchByCity";
+
+import ViewPopultation from "./screens/ViewPopultation";
+import CityFilter from "./screens/CityFilter";
+import StartScreen from "./screens/StartScreen";
+
+
+//initierar navigator för att kunna navigera mellan solika skärmar 
 const RootStack = createNativeStackNavigator();
 
-//Work for tomorrow, keep watching video. nesled screens, Investigate API
+//Navigations parametrar
 export type RootStackParams = {
-  SearchByCityScreen:{
+  SearchByCityScreen: {
     mode: boolean;
   };
-  
+
   StartScreen: any;
-  CityFilter:{
-    allData: object,
+  CityFilter: {
+    allData: object;
   };
-  ViewPopultation:{
+  ViewPopultation: {
     name: string;
-    population: string; //tills vidare
+    population: string;
   };
-}
+};
 
 export default function App() {
   return (
     <NavigationContainer>
-     <RootStack.Navigator>
-       <RootStack.Screen name='StartScreen' component={StartScreen}/>
-       <RootStack.Screen name='SearchByCityScreen' component={SearchByCityScreen}/>
-       
-       <RootStack.Screen name='CityFilter' component={CityFilter}/>
-       <RootStack.Screen name='ViewPopultation' component={ViewPopultation}/>
+      <RootStack.Navigator>
+        <RootStack.Screen
+          name='StartScreen'
+          component={StartScreen}
+          options={{ title: "CityPop", headerShown: false }}
+        />
+
+        <RootStack.Screen
+          name='SearchByCityScreen'
+          component={SearchByCityScreen}
+          options={{ title: "CityPop" }}
+        />
+
+        <RootStack.Screen
+          name='CityFilter'
+          component={CityFilter}
+          options={{ title: "CityPop" }}
+        />
+        <RootStack.Screen
+          name='ViewPopultation'
+          component={ViewPopultation}
+          options={{ title: "CityPop" }}
+        />
       </RootStack.Navigator>
-    
-    
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
