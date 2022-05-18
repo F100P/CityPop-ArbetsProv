@@ -6,11 +6,11 @@ import {
   createNativeStackNavigator,
 
 } from "@react-navigation/native-stack";
-import SearchByCityScreen from "./screens/SearchByCity";
+import SearchByCityScreen from "./Screens/SearchByCity";
 
-import ViewPopultation from "./screens/ViewPopultation";
-import CityFilter from "./screens/CityFilter";
-import StartScreen from "./screens/StartScreen";
+import ViewPopultation from "./Screens/ViewPopultation";
+import CityFilter from "./Screens/CityFilter";
+import StartScreen from "./Screens/StartScreen";
 
 
 //initierar navigator för att kunna navigera mellan solika skärmar 
