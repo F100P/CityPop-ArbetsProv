@@ -5,6 +5,8 @@ import { Searchbar} from "react-native-paper";
 import searchCity from "../connections/searchCity";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../App";
+import FindCountryCode from "../connections/FindCountryCode";
+import searchCountry from "../connections/searchCountry";
 
 
 type Props = NativeStackScreenProps<RootStackParams, "SearchByCityScreen">;
@@ -36,28 +38,40 @@ const SearchByCityScreen = ({ navigation, route }: Props) => {
   const onChangeSearch = (query: React.SetStateAction<never[]>) =>
     setSearchQuery(query); 
 
-  
+  //Blev lite rörigt här då komplexiteten för sökningen ökade mer än jag trodde... 
   //Startar laddningsskärm för att sedan göra ett Quary, skickar vidare nödvändig data till nästkommande skärm
   const SearchPressed = () => {
     setLoading(true);
     //if City Search
-
-    searchCity(searchQuary).then((data) => {
-      if (data.totalResultsCount != 0 && searchQuary.length != 0 && data) {
-        // Vid en "dålig" sökning
-        if (route.params.mode) { //city- eller country-läge
-          navigateToCity(data.geonames[0].name, data.geonames[0].population);
-        } else {
-          navigateToCountry(data);
+    if(route.params.mode){
+      searchCity(searchQuary).then((data)=> {
+        if (data.totalResultsCount != 0 && searchQuary.length != 0 && data) {
+        navigateToCity(data.geonames[0].name, data.geonames[0].population)
         }
-      } else {
-        //Något gick snett visar felmeddelande
-        setQuaryOk(true);
-        setLoading(false);
-      }
-    });
+        else{
+          setQuaryOk(true);
+          setLoading(false);
+        }
+      });
 
+    }
+    else{
+    FindCountryCode(searchQuary).then((CountryCode) => {
+      searchCountry(CountryCode).then((data) => {
+        if (data.totalResultsCount != 0 && searchQuary.length != 0 && data) {
+          // Vid en "dålig" sökning
+            navigateToCountry(data);
+          }
+         else {
+          //Något gick snett visar felmeddelande
+          setQuaryOk(true);
+          setLoading(false);
+        }
+      });
+    });
    
+
+  }
   }; 
 
   return (

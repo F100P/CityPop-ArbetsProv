@@ -4,7 +4,7 @@ export default async function (Sokning) {
   const username = "weknowit"; //Tas bort vid offentliggörande 
   
   //Hämtar data baserad på sökning. sökningen bör vara antingen land eller stad
-  await fetch(`http://api.geonames.org/searchJSON?q=${Sokning}&username=${username}&maxRows=10&orderby=population`, {
+  await fetch(`http://api.geonames.org/searchJSON?q=${Sokning}&username=${username}&maxRows=10&orderby=population&fcode=ADM1`, {
     method: "GET",
   })
     
@@ -20,6 +20,7 @@ export default async function (Sokning) {
 
 .then((response) => {
 searchCity = response;
+
 })
 .catch((err) => {console.log("Error fetching test endpoint", err), searchCity = []});
 
