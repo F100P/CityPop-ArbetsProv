@@ -1,13 +1,12 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 import React, { useState } from "react";
-import { Searchbar} from "react-native-paper";
+import { Searchbar } from "react-native-paper";
 import searchCity from "../connections/searchCity";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../App";
 import FindCountryCode from "../connections/FindCountryCode";
 import searchCountry from "../connections/searchCountry";
-
 
 type Props = NativeStackScreenProps<RootStackParams, "SearchByCityScreen">;
 
@@ -18,7 +17,7 @@ const SearchByCityScreen = ({ navigation, route }: Props) => {
   const [searchQuary, setSearchQuery] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  //navigerar till nästa ViewPopulation 
+  //navigerar till nästa ViewPopulation
   //Används då mode är inställt för city
   const navigateToCity = (country: string, population: string) =>
     navigation.navigate(`ViewPopultation`, {
@@ -26,53 +25,47 @@ const SearchByCityScreen = ({ navigation, route }: Props) => {
       population: population,
     });
 
-      //Navigerar till Cityfilter 
-      //Används då mode är inställt för country
+  //Navigerar till Cityfilter
+  //Används då mode är inställt för country
   const navigateToCountry = (data: object) => {
     navigation.navigate(`CityFilter`, {
       allData: data,
     });
   };
 
-//uppdaterar variabeln som ska skickas till Searchcountry
+  //uppdaterar variabeln som ska skickas till Searchcountry
   const onChangeSearch = (query: React.SetStateAction<never[]>) =>
-    setSearchQuery(query); 
+    setSearchQuery(query);
 
-  //Blev lite rörigt här då komplexiteten för sökningen ökade mer än jag trodde... 
+  //Blev lite rörigt här då komplexiteten för sökningen ökade mer än jag trodde...
   //Startar laddningsskärm för att sedan göra ett Quary, skickar vidare nödvändig data till nästkommande skärm
   const SearchPressed = () => {
     setLoading(true);
     //if City Search
-    if(route.params.mode){
-      searchCity(searchQuary).then((data)=> {
+    if (route.params.mode) {
+      searchCity(searchQuary).then((data) => {
         if (data.totalResultsCount != 0 && searchQuary.length != 0 && data) {
-        navigateToCity(data.geonames[0].name, data.geonames[0].population)
-        }
-        else{
+          navigateToCity(data.geonames[0].name, data.geonames[0].population);
+        } else {
           setQuaryOk(true);
           setLoading(false);
         }
       });
-
-    }
-    else{
-    FindCountryCode(searchQuary).then((CountryCode) => {
-      searchCountry(CountryCode).then((data) => {
-        if (data.totalResultsCount != 0 && searchQuary.length != 0 && data) {
-          // Vid en "dålig" sökning
+    } else {
+      FindCountryCode(searchQuary).then((CountryCode) => {
+        searchCountry(CountryCode).then((data) => {
+          if (data.totalResultsCount != 0 && searchQuary.length != 0 && data) {
+            // Vid en "dålig" sökning
             navigateToCountry(data);
+          } else {
+            //Något gick snett visar felmeddelande
+            setQuaryOk(true);
+            setLoading(false);
           }
-         else {
-          //Något gick snett visar felmeddelande
-          setQuaryOk(true);
-          setLoading(false);
-        }
+        });
       });
-    });
-   
-
-  }
-  }; 
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -82,7 +75,7 @@ const SearchByCityScreen = ({ navigation, route }: Props) => {
         <Text style={styles.text}>SEARCH BY{"\n"}COUNTRY</Text>
       )}
 
-      {loading ? ( 
+      {loading ? (
         <Text style={styles.loading}>loading</Text>
       ) : (
         <>

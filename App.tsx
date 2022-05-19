@@ -1,19 +1,18 @@
-import { NavigationContainer} from "@react-navigation/native";
+import { NavigationContainer } from "@react-navigation/native";
 
 import React from "react";
 
-import {
-  createNativeStackNavigator,
-
-} from "@react-navigation/native-stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import SearchByCityScreen from "./Screens/SearchByCity";
 
 import ViewPopultation from "./Screens/ViewPopultation";
 import CityFilter from "./Screens/CityFilter";
 import StartScreen from "./Screens/StartScreen";
 
+import { TouchableOpacity } from "react-native";
+import { Entypo } from "@expo/vector-icons";
 
-//initierar navigator för att kunna navigera mellan solika skärmar 
+//initierar navigator för att kunna navigera mellan solika skärmar
 const RootStack = createNativeStackNavigator();
 
 //Navigations parametrar
@@ -32,6 +31,8 @@ export type RootStackParams = {
   };
 };
 
+
+
 export default function App() {
   return (
     <NavigationContainer>
@@ -45,18 +46,45 @@ export default function App() {
         <RootStack.Screen
           name='SearchByCityScreen'
           component={SearchByCityScreen}
-          options={{ title: "CityPop" }}
+          options={({ navigation }) => ({
+            title: "CityPop",
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("StartScreen")}
+              >
+                <Entypo name='arrow-left' size={40} color='black' />
+              </TouchableOpacity>
+            ),
+          })}
         />
 
         <RootStack.Screen
           name='CityFilter'
           component={CityFilter}
-          options={{ title: "CityPop" }}
+          options={({ navigation }) => ({
+            title: "CityPop",
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("StartScreen")}
+              >
+                <Entypo name='arrow-left' size={40} color='black' />
+              </TouchableOpacity>
+            ),
+          })}
         />
         <RootStack.Screen
           name='ViewPopultation'
           component={ViewPopultation}
-          options={{ title: "CityPop" }}
+          options={({ navigation }) => ({
+            title: "CityPop",
+            headerLeft: () => (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("StartScreen")}
+              >
+                <Entypo name='arrow-left' size={40} color='black' />
+              </TouchableOpacity>
+            ),
+          })}
         />
       </RootStack.Navigator>
     </NavigationContainer>
