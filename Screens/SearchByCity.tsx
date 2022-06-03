@@ -5,7 +5,7 @@ import { Searchbar } from "react-native-paper";
 import searchCity from "../connections/searchCity";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParams } from "../App";
-import FindCountryCode from "../connections/FindCountryCode";
+import FindCountryCode from "../connections/findCountryCode";
 import searchCountry from "../connections/searchCountry";
 
 type Props = NativeStackScreenProps<RootStackParams, "SearchByCityScreen">;
@@ -14,7 +14,7 @@ type Props = NativeStackScreenProps<RootStackParams, "SearchByCityScreen">;
 const SearchByCityScreen = ({ navigation, route }: Props) => {
   //initerar statevariabler
   const [quaryOk, setQuaryOk] = useState(false);
-  const [searchQuary, setSearchQuery] = useState([]);
+  const [searchQuary, setSearchQuery] = useState({text: ''});
   const [loading, setLoading] = useState(false);
 
   //navigerar till nästa ViewPopulation
@@ -29,22 +29,24 @@ const SearchByCityScreen = ({ navigation, route }: Props) => {
   //Används då mode är inställt för country
   const navigateToCountry = (data: object) => {
     navigation.navigate(`CityFilter`, {
+      route,
       allData: data,
     });
   };
 
   //uppdaterar variabeln som ska skickas till Searchcountry
-  const onChangeSearch = (query: React.SetStateAction<never[]>) =>
-    setSearchQuery(query);
+  // const onChangeSearch = (query: React.SetStateAction<never[]>) =>
+  //   setSearchQuery(query);
 
   //Blev lite rörigt här då komplexiteten för sökningen ökade mer än jag trodde...
   //Startar laddningsskärm för att sedan göra ett Quary, skickar vidare nödvändig data till nästkommande skärm
   const SearchPressed = () => {
     setLoading(true);
+    let search = searchQuary.text;
     //if City Search
     if (route.params.mode) {
-      searchCity(searchQuary).then((data) => {
-        if (data.totalResultsCount != 0 && searchQuary.length != 0 && data) {
+      searchCity(search).then((data) => {
+        if (data.totalResultsCount != 0 && search.length != 0 && data) {
           navigateToCity(data.geonames[0].name, data.geonames[0].population);
         } else {
           setQuaryOk(true);
@@ -52,9 +54,9 @@ const SearchByCityScreen = ({ navigation, route }: Props) => {
         }
       });
     } else {
-      FindCountryCode(searchQuary).then((CountryCode) => {
+      FindCountryCode(search).then((CountryCode) => {
         searchCountry(CountryCode).then((data) => {
-          if (data.totalResultsCount != 0 && searchQuary.length != 0 && data) {
+          if (data.totalResultsCount != 0 && search.length != 0 && data) {
             // Vid en "dålig" sökning
             navigateToCountry(data);
           } else {
@@ -82,8 +84,9 @@ const SearchByCityScreen = ({ navigation, route }: Props) => {
           <Searchbar
             style={styles.searchbar}
             placeholder='Enter a city'
-            value={searchQuary}
-            onChangeText={onChangeSearch}
+            
+            onChangeText={(text) => setSearchQuery({text})}
+            value={searchQuary.text}
           />
           <TouchableOpacity style={styles.searchButton} onPress={SearchPressed}>
             <Entypo name='magnifying-glass' size={60} color='black' />

@@ -22,6 +22,7 @@ const CityButton = (cityData: {
 
   return (
     <TouchableOpacity
+    
       style={styles.button}
       onPress={() => {
         //Varför fungerar inte det här?

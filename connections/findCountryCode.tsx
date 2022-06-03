@@ -1,7 +1,6 @@
-import searchCountry from "./searchCountry";
 
-export default async function (Sokning) {
-    console.log(Sokning);
+export default async function (Sokning: any) {
+    
     var CountryCode;
     const username = "weknowit"; //Tas bort vid offentliggörande 
     

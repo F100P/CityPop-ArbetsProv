@@ -2,12 +2,12 @@ import { View, Text, StyleSheet, FlatList, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import CityButton from "../Components/CityButton";
 
-const CityFilter = ({ navigate, route }) => {
-  console.log(route.params.allData.geonames.length);
+const CityFilter = ({ route }) => {
+  
 
   const [geonames, setGeonames] = useState([]);
   const [searchCountry, setSearchCountry] = useState([]);
-
+  let keyOperator = 0;
   useEffect(() => {
     setGeonames(route.params.allData.geonames);
     setSearchCountry(route.params.allData.geonames[0].countryName);
@@ -18,7 +18,8 @@ const CityFilter = ({ navigate, route }) => {
       <Text style={styles.text}>{searchCountry}</Text>
       <ScrollView style={styles.scroll}>
         {geonames.map((data) => {
-          return <CityButton allData={data}></CityButton>;
+          keyOperator++;
+          return <CityButton key={keyOperator} allData={data}></CityButton>;
         })}
       </ScrollView>
     </View>

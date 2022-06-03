@@ -1,10 +1,10 @@
-export default async function (Sokning) {
+export default async function (Sokning: any) {
     
     var searchCountry;
     const username = "weknowit"; //Tas bort vid offentliggörande 
     
     //Hämtar data baserad på sökning. sökningen bör vara antingen land eller stad
-    await fetch(`http://api.geonames.org/searchJSON?country=${Sokning}&username=${username}&maxRows=10&orderby=population&fcode=ADM1`, {
+    await fetch(`http://api.geonames.org/searchJSON?country=${Sokning}&username=${username}&maxRows=10&orderby=population&fcode=PPLC&fcode=PPLA`, {
       method: "GET",
     })
       

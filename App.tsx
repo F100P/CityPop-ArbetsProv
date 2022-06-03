@@ -23,6 +23,7 @@ export type RootStackParams = {
 
   StartScreen: any;
   CityFilter: {
+    route: any;
     allData: object;
   };
   ViewPopultation: {
@@ -30,8 +31,6 @@ export type RootStackParams = {
     population: string;
   };
 };
-
-
 
 export default function App() {
   return (
